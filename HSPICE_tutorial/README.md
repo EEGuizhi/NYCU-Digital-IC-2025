@@ -18,7 +18,7 @@
     1. DC Voltage :</br>
         `V<name>  <node+>  <node->  <voltage>`
     2. Pulse Voltage :</br>
-        `V<name>  <node+>  <node->  pulse(<v_low>  <v_high>  <delay>  <t_rise>  <t_fall>  <pulse_width>  <period>)`
+        `V<name>  <node+>  <node->  pulse(<v_high>  <v_low>  <delay>  <t_rise>  <t_fall>  <pulse_width>  <period>)`
     3. Sinusoidal Voltage :</br>
         `V<name>  <node+>  <node->  sin(<v_offset>  <v_amp>  <freq>  <t_delay>)`
     4. PWL Voltage :</br>
@@ -30,7 +30,7 @@
     .ends
     ```
 - **Declare Sub-Circuit:**</br>
-    `X<name>  <port1>  <port2>  ...`
+    `X<name>  <port1>  <port2>  ... <subcircuit>`
 - **Simulation Commands (Analysis Types):**</br>
     There are 3 types of analysis, AC / DC / Transient.
     1. AC (= `AC`) :</br>
@@ -47,7 +47,8 @@
 
 
 - **Reference:**</br>
-    https://blog.csdn.net/Tranquil_ovo/article/details/132571282
+    1. https://hackmd.io/@azoo/hspice_tutorial
+    2. https://blog.csdn.net/Tranquil_ovo/article/details/132571282
 
 
 </br></br>
