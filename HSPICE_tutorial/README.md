@@ -1,28 +1,43 @@
 # HSPICE Tutorial
 
 ### **# YOU NEED TO KNOW FIRST**
-- 檔案中的第一行為註解；檔案結尾要加上`.end`。
+- 檔案中的第一行固定視為註解；檔案結尾要加上`.end`。
 - 在 `*` 或 `$` 後面的字後方為註解。
 - HSPICE 不區分大小寫字體。
 - 在關鍵字後方緊接著變數的命名，不需要空格。</br>
   **E.g.,** 建立一個叫 `abc` 的 MOSFET : `mabc` ( `m` 是宣告 MOSFET 的關鍵字)
+- **Terminal Command**:
+    ```shell
+    hspice -i <testbench_file.sp> -o <output_file.lis>  # Run HSPICE simulation
+    wv &  # Open waveview
+    ```
+    輸出檔案也可以空著。
 
 ### **# Quick View**
 - **Declare MOSFET:**</br>
-    `m<name>  <drain>  <gate>  <source>  <body>  <type>  l=<length>  w=<width>`
+    ```
+    m<name>  <drain>  <gate>  <source>  <body>  <type>  l=<length>  w=<width>
+    ```
+    - Advanced settings: `ad=<drain_area>  as=<source_area>  pd=<drain_perimeter>  ps=<source_perimeter>`
 - **Declare Capacitor:**</br>
-    `C<name>  <node1>  <node2>  <capacitance>`
+    ```
+    C<name>  <node1>  <node2>  <capacitance>
+    ```
 - **Declare Resistor:**</br>
-    `R<name>  <node1>  <node2>  <resistance>`
+    ```
+    R<name>  <node1>  <node2>  <resistance>
+    ```
 - **Declare Voltage:**</br>
-    1. DC Voltage :</br>
-        `V<name>  <node+>  <node->  <voltage>`
-    2. Pulse Voltage :</br>
-        `V<name>  <node+>  <node->  pulse(<v_high>  <v_low>  <delay>  <t_rise>  <t_fall>  <pulse_width>  <period>)`
-    3. Sinusoidal Voltage :</br>
-        `V<name>  <node+>  <node->  sin(<v_offset>  <v_amp>  <freq>  <t_delay>)`
-    4. PWL Voltage :</br>
-        `V<name>  <node+>  <node->  pwl(<t1> <v1> <t2> <v2> <t3> <v3> ...)`
+    ```shell
+    # DC Voltage
+    V<name>  <node+>  <node->  <voltage>
+    # Pulse Voltage
+    V<name>  <node+>  <node->  pulse(<v_high>  <v_low>  <delay>  <t_rise>  <t_fall>  <pulse_width>  <period>)
+    # Sinusoidal Voltage
+    V<name>  <node+>  <node->  sin(<v_offset>  <v_amp>  <freq>  <t_delay>)
+    # PWL Voltage
+    V<name>  <node+>  <node->  pwl(<t1> <v1> <t2> <v2> <t3> <v3> ...)
+    ```
 - **Create Sub-Circuit:**</br>
     ```
     .subckt <name>  <port1>  <port2>  ...
@@ -30,21 +45,38 @@
     .ends
     ```
 - **Declare Sub-Circuit:**</br>
-    `X<name>  <port1>  <port2>  ... <subcircuit>`
+    ```
+    X<name>  <port1>  <port2>  ... <subckt_name>
+    ```
 - **Simulation Commands (Analysis Types):**</br>
     There are 3 types of analysis, AC / DC / Transient.
-    1. AC (= `AC`) :</br>
+    1. **AC** (= `AC`) :</br>
         Small signal analysis, frequency domain analysis. (not used)
-    2. DC (= `DC`) :</br>
-        `.dc  <voltage>  <v_init>  <v_end>  <v_step>  sweep  <param>  <param_init>  <param_end>  <param_step>`
-    3. Trasient (= `Tran`) :</br>
-        ``
+        - Output file: `xxx.ac0`
+    2. **DC** (= `DC`) :</br>
+        ```
+        .dc  <voltage>  <v_init>  <v_end>  <v_step>  sweep  <param>  <param_init>  <param_end>  <param_step>
+        ```
+        - Output file: `xxx.sw0`
+    3. **Trasient** (= `Tran`) :</br>
+        ```
+        .tran  <resolution>  <run_time>  <uic/ >
+        ```
+        - `uic` 是使用到 initial condition 時要打的，沒有的話空著就好。
+        - Setting initial condition:</br>
+            `.ic  V(<subckt_name>.<node>)=<value>`
+        - Output file: `xxx.tr0`
 
 - **Measurement:**</br>
-    `.probe  <analysis_type>  <observation>`
-    - Observation term:</br>
-
-
+    1. **PROBE**:</br>
+        ```
+        .probe  <analysis_type>  <ob1>  <ob2> ...
+        ```
+        - 把輸出變量以圖形的形式儲存，部會出現在輸出列表文件中。
+        - Analysis type:</br>
+            ac = `AC`, dc = `DC`, tran = `Tran`
+        - Observation term:</br>
+            Voltage = `v(<node>)`,  Current = `i(<node>)`
 
 - **Reference:**</br>
     1. https://hackmd.io/@azoo/hspice_tutorial
