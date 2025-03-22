@@ -13,8 +13,8 @@
 .unprotect
 
 ******************* Parameter setting *******************
-.param wp = 64n
-.param wn = 64n
+.param wp  = 64n
+.param wn  = 64n
 .param VDD = 1.0
 
 ******************* Circuit description *******************
@@ -32,9 +32,6 @@ Vvs_n    vs_n  0  0
 Vvd_p    vd_p  0  0
 Vvg_p    vg_p  0  0
 Vvs_p    vs_p  0  VDD
-
-******************* Input declaration *******************
-* skipped
 
 ******************* Analysis setting *******************
 .dc  Vvd_n  0  VDD  0.01  sweep  Vvg_n  0  VDD  0.1
