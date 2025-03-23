@@ -33,29 +33,29 @@
 Xstb1   v1 v2 vdd gnd  STB
 Xstb2   v2 v3 vdd gnd  STB
 Xstb3   v3 v1 vdd gnd  STB
-Cload   v1 gnd         5f
-Cload   v2 gnd         5f
-Cload   v3 gnd         5f
 
 ******************* Power declaration *******************
 Vgnd    gnd  0  0
 Vvdd    vdd  0  VDD
 
-******************* Transient analysis setting *******************
-.ic V(v1) = 0
+******************* Analysis setting *******************
+.ic   V(v1)=0  V(v2)=VDD  V(v3)=0
 .tran 5p 4n
 
 ******************* Measurement *******************
-.measure tran tdf  TRIG V(v1)  VAL='0.5*VDD' FALL=1 TARG V(v2) VAL='0.5*VDD' FALL=1
-.measure tran tdr  TRIG V(v1)  VAL='0.5*VDD' RISE=1 TARG V(v2) VAL='0.5*VDD' RISE=1
-.measure tran tr   TRIG V(v1)  VAL='0.1*VDD' RISE=1 TARG V(v1) VAL='0.9*VDD' RISE=1
-.measure tran tf   TRIG V(v1)  VAL='0.9*VDD' FALL=1 TARG V(v1) VAL='0.1*VDD' FALL=1
+.measure tran tpdf  TRIG V(v1) VAL='0.5*VDD' RISE=1  TARG V(v2) VAL='0.5*VDD' FALL=1
+.measure tran tpdr  TRIG V(v1) VAL='0.5*VDD' FALL=1  TARG V(v2) VAL='0.5*VDD' RISE=1
+.measure tran tr    TRIG V(v1) VAL='0.1*VDD' RISE=1  TARG V(v1) VAL='0.9*VDD' RISE=1
+.measure tran tf    TRIG V(v1) VAL='0.9*VDD' FALL=1  TARG V(v1) VAL='0.1*VDD' FALL=1
 
 .measure tran clk_period  TRIG V(v1) VAL='0.5*VDD' RISE=1 TARG V(v1) VAL='0.5*VDD' RISE=2
 
 ******************* Power Analysis *******************
 .measure tran avg_power     AVG  POWER
 .measure tran peak_power    MAX  POWER
-.measure tran leakage_power FIND POWER AT=4n
+
+** For measuring leakage power (.op will show the report in .lis file) **
+.alter
+Xstb3    v3 v4 vdd gnd  STB
 
 .end

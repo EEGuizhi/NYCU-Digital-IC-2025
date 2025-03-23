@@ -29,20 +29,20 @@
 Xstb    word bit bit_b q q_b vdd gnd  SRAM
 
 ******************* Power declaration *******************
-Vgnd     gnd  0  0
-Vvdd     vdd  0  VDD
+Vgnd    gnd  0  0
+Vvdd    vdd  0  VDD
 
 ******************* Input & Analysis *******************
 Vword    word  0  VDD
 
 ** Scenario 1 **
-*Vbit     bit   0  0
-*Vbit_b   bit_b 0  VDD
-*.ic      V(q)=VDD  V(q_b)=0  V(word)=VDD
+*Vbit    bit   0  0
+*Vbit_b  bit_b 0  VDD
+*.ic     V(q)=VDD  V(q_b)=0  V(word)=VDD
 
 ** Scenario 2 **
-Vbit     bit   0  VDD
-Vbit_b   bit_b 0  0
-.ic      V(q)=0  V(q_b)=VDD  V(word)=VDD
+Vbit    bit   0  VDD
+Vbit_b  bit_b 0  0
+.ic     V(q)=0  V(q_b)=VDD  V(word)=VDD
 
 .end

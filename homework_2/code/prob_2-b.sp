@@ -31,22 +31,19 @@
 .ends
 
 Xstb    vin vout vdd gnd  STB
-Cload   vout gnd          5f
 
 ******************* Power declaration *******************
 Vgnd    gnd  0  0
 Vvdd    vdd  0  VDD
 
-******************* Input signal *******************
+******************* Input & Analysis *******************
 Vvin    vin  0  PULSE(0 VDD 0 0.1n 0.1n 3n 6n)
-
-******************* Transient analysis setting *******************
-.tran 10p 6n
+.tran   10p  6n
 
 ******************* Measurement commands *******************
-.measure tran tpdf  TRIG V(vin)  VAL='0.5*VDD' FALL=1 TARG V(vout) VAL='0.5*VDD' FALL=1
-.measure tran ptdr  TRIG V(vin)  VAL='0.5*VDD' RISE=1 TARG V(vout) VAL='0.5*VDD' RISE=1
-.measure tran tr    TRIG V(vout) VAL='0.1*VDD' RISE=1 TARG V(vout) VAL='0.9*VDD' RISE=1
-.measure tran tf    TRIG V(vout) VAL='0.9*VDD' FALL=1 TARG V(vout) VAL='0.1*VDD' FALL=1
+.measure tran tpdf  TRIG V(vin)  VAL='0.5*VDD' RISE=1  TARG V(vout) VAL='0.5*VDD' FALL=1
+.measure tran tpdr  TRIG V(vin)  VAL='0.5*VDD' FALL=1  TARG V(vout) VAL='0.5*VDD' RISE=1
+.measure tran tr    TRIG V(vout) VAL='0.1*VDD' RISE=1  TARG V(vout) VAL='0.9*VDD' RISE=1
+.measure tran tf    TRIG V(vout) VAL='0.9*VDD' FALL=1  TARG V(vout) VAL='0.1*VDD' FALL=1
 
 .end
