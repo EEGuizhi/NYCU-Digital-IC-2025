@@ -43,19 +43,27 @@ Vvdd    vdd  0  VDD
 .tran 5p 4n
 
 ******************* Measurement *******************
-.measure tran tpdf  TRIG V(v1) VAL='0.5*VDD' RISE=1  TARG V(v2) VAL='0.5*VDD' FALL=1
-.measure tran tpdr  TRIG V(v1) VAL='0.5*VDD' FALL=1  TARG V(v2) VAL='0.5*VDD' RISE=1
-.measure tran tr    TRIG V(v1) VAL='0.1*VDD' RISE=1  TARG V(v1) VAL='0.9*VDD' RISE=1
-.measure tran tf    TRIG V(v1) VAL='0.9*VDD' FALL=1  TARG V(v1) VAL='0.1*VDD' FALL=1
+.measure tran tpdf1  TRIG V(v1) VAL='0.5*VDD' RISE=2  TARG V(v2) VAL='0.5*VDD' FALL=2
+.measure tran tpdr1  TRIG V(v1) VAL='0.5*VDD' FALL=2  TARG V(v2) VAL='0.5*VDD' RISE=2
+.measure tran tr1    TRIG V(v1) VAL='0.1*VDD' RISE=2  TARG V(v1) VAL='0.9*VDD' RISE=2
+.measure tran tf1    TRIG V(v1) VAL='0.9*VDD' FALL=2  TARG V(v1) VAL='0.1*VDD' FALL=2
 
-.measure tran clk_period  TRIG V(v1) VAL='0.5*VDD' RISE=1 TARG V(v1) VAL='0.5*VDD' RISE=2
+.measure tran tpdf2  TRIG V(v2) VAL='0.5*VDD' RISE=1  TARG V(v3) VAL='0.5*VDD' FALL=1
+.measure tran tpdr2  TRIG V(v2) VAL='0.5*VDD' FALL=1  TARG V(v3) VAL='0.5*VDD' RISE=1
+.measure tran tr2    TRIG V(v2) VAL='0.1*VDD' RISE=1  TARG V(v2) VAL='0.9*VDD' RISE=1
+.measure tran tf2    TRIG V(v2) VAL='0.9*VDD' FALL=1  TARG V(v2) VAL='0.1*VDD' FALL=1
+
+.measure tran tpdf3  TRIG V(v3) VAL='0.5*VDD' RISE=1  TARG V(v1) VAL='0.5*VDD' FALL=1
+.measure tran tpdr3  TRIG V(v3) VAL='0.5*VDD' FALL=1  TARG V(v1) VAL='0.5*VDD' RISE=2
+.measure tran tr3    TRIG V(v3) VAL='0.1*VDD' RISE=1  TARG V(v3) VAL='0.9*VDD' RISE=1
+.measure tran tf3    TRIG V(v3) VAL='0.9*VDD' FALL=1  TARG V(v3) VAL='0.1*VDD' FALL=1
+
+.measure tran clk_period1  TRIG V(v1) VAL='0.5*VDD' RISE=2  TARG V(v1) VAL='0.5*VDD' RISE=3
+.measure tran clk_period2  TRIG V(v2) VAL='0.5*VDD' RISE=1  TARG V(v2) VAL='0.5*VDD' RISE=2
+.measure tran clk_period3  TRIG V(v3) VAL='0.5*VDD' RISE=1  TARG V(v3) VAL='0.5*VDD' RISE=2
 
 ******************* Power Analysis *******************
-.measure tran avg_power     AVG  POWER
-.measure tran peak_power    MAX  POWER
-
-** For measuring leakage power (.op will show the report in .lis file) **
-.alter
-Xstb3    v3 v4 vdd gnd  STB
+.measure tran avg_power     AVG  POWER  FROM=100ps
+.measure tran peak_power    MAX  POWER  FROM=100ps
 
 .end
