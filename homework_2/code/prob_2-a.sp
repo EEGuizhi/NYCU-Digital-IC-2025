@@ -26,7 +26,7 @@
     mn4    q_b word bit_b gnd  nmos_svt W=64n  L=32n AD=17644e-18 AS=5041e-18  PD=610n PS=286n
 .ends
 
-Xstb    word bit bit_b q q_b vdd gnd  SRAM
+Xsram   word bit bit_b q q_b vdd gnd  SRAM
 
 ******************* Power declaration *******************
 Vgnd    gnd  0  0

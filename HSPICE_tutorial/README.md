@@ -103,8 +103,8 @@
 .param simtime = 5n
 
 .subckt inv in out vdd vss
-m1 out in vdd vdd pmos w=wp l=32n
-m2 out in vss vss nmos w=wn l=32n
+    m1 out in vdd vdd pmos w=wp l=32n
+    m2 out in vss vss nmos w=wn l=32n
 .ends
 
 xinv_1 input output vdd vss inv
