@@ -17,7 +17,7 @@
 .param Nn  = 1
 .param VDD = 0.8
 
-******************* Three-Stage Ring Oscillator *******************
+******************* Circuit description *******************
 .subckt INV    vin vout vdd gnd
     m1    vout vin vdd vdd  pmos_rvt nfin=Np
     m2    vout vin gnd gnd  nmos_rvt nfin=Nn
