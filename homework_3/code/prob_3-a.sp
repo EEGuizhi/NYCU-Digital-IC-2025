@@ -9,21 +9,22 @@
 
 ******************* Library setting *******************
 .protect
-.lib '../7nm_TT_160803.pm'
+.lib '../N16ADFP_SPICE_MODEL/n16adfp_spice_model_v1d0_usage.l' FFMacro_MOS_MOSCAP
 .unprotect
 
 ******************* Parameter setting *******************
+.param L   = 16n
 .param VDD = 0.8
 
 ******************* Circuit description *******************
 .subckt INV    vin vout vdd gnd
-    m1    vout vin vdd vdd  pmos_rvt nfin=Np
-    m2    vout vin gnd gnd  nmos_rvt nfin=Nn
+    m1    vout vin vdd vdd  pch_svt_mac nfin=1 l=L
+    m2    vout vin gnd gnd  nch_svt_mac nfin=1 l=L
 .ends
 
 .subckt TG    vin vout en_p en_n
-    mp    in en_p out vdd  pmos_rvt nfin=4
-    mn    in en_n out vss  nmos_rvt nfin=4
+    mp    in en_p out vdd  pch_svt_mac nfin=4 l=L
+    mn    in en_n out vss  nch_svt_mac nfin=4 l=L
 .ends
 
 .subckt DFF    d clk q q_b vdd gnd
