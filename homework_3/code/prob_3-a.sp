@@ -17,33 +17,40 @@
 .param VDD = 0.8
 
 ******************* Circuit description *******************
-.subckt INV    vin vout vdd gnd
-    m1    vout vin vdd vdd  pch_svt_mac nfin=1 l=L
-    m2    vout vin gnd gnd  nch_svt_mac nfin=1 l=L
+.subckt INV    vin vout vdd vss
+    m1    vout vin vdd vdd  pch_svt_mac l=L nfin=1
+    m2    vout vin vss vss  nch_svt_mac l=L nfin=1
 .ends
 
 .subckt TG    vin vout en_p en_n
-    mp    in en_p out vdd  pch_svt_mac nfin=4 l=L
-    mn    in en_n out vss  nch_svt_mac nfin=4 l=L
+    mp    vin en_p out vdd  pch_svt_mac l=L nfin=4
+    mn    vin en_n out vss  nch_svt_mac l=L nfin=4
 .ends
 
-.subckt DFF    d clk q q_b vdd gnd
-    Xinv_C    clk clk_b vdd gnd    INV
-    Xinv_1    d   v1    vdd gnd    INV
+.subckt NAND    vin1 vin2 vout vdd vss
+    mp1    vout vin1 vdd vdd  pch_svt_mac l=L nfin=1
+    mp2    vout vin2 vdd vdd  pch_svt_mac l=L nfin=1
+    mn1    vout vin1 v1  vss  nch_svt_mac l=L nfin=2
+    mn2    v1   vin2 vss vss  nch_svt_mac l=L nfin=2
+.ends
+
+.subckt DFF    rst d clk clk_b q q_b vdd vss
+    
+    Xinv_1    d   v1    vdd vss    INV
     Xtg_1     v1  v2    clk clk_b  TG
-    Xinv_2    v2  v3    vdd gnd    INV   
-    Xinv_3    v3  v2    vdd gnd    INV
+    Xinv_2    v2  v3    vdd vss    INV   
+    Xinv_3    v3  v2    vdd vss    INV
     Xtg_2     v3  v4    clk clk_b  TG
-    Xinv_4    v4  v5    vdd gnd    INV
-    Xinv_5    v5  v4    vdd gnd    INV
-    Xinv_Q    v5  q     vdd gnd    INV
-    Xinv_Qb   v4  q_b   vdd gnd    INV
+    Xinv_4    v4  v5    vdd vss    INV
+    Xinv_5    v5  v4    vdd vss    INV
+    Xinv_Q    v5  q     vdd vss    INV
+    Xinv_Qb   v4  q_b   vdd vss    INV
 .ends
 
-Xdff  d clk q q_b vdd gnd  DFF
+Xdff  d clk q q_b vdd vss  DFF
 
 ******************* Power declaration *******************
-Vgnd    gnd  0  0
+Vgnd    vss  0  0
 Vvdd    vdd  0  VDD
 
 ******************* Input & Analysis *******************

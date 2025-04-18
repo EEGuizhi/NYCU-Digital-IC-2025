@@ -38,16 +38,16 @@ Vvdd    vdd  0  VDD
 .tran 1p 100p
 
 ** Power Analysis
-.measure tran avg_power     AVG  POWER  FROM=5ps
-.measure tran peak_power    MAX  POWER  FROM=5ps
+.meas tran avg_power     AVG  POWER  FROM=5ps
+.meas tran peak_power    MAX  POWER  FROM=5ps
 
 ** Clock Period
-.measure tran clk_period1  TRIG V(v1) VAL='0.5*VDD' RISE=2  TARG V(v1) VAL='0.5*VDD' RISE=3
-.measure tran clk_period2  TRIG V(v2) VAL='0.5*VDD' RISE=2  TARG V(v2) VAL='0.5*VDD' RISE=3
-.measure tran clk_period3  TRIG V(v3) VAL='0.5*VDD' RISE=2  TARG V(v3) VAL='0.5*VDD' RISE=3
+.meas tran clk_period1  TRIG V(v1) VAL='0.5*VDD' RISE=2  TARG V(v1) VAL='0.5*VDD' RISE=3
+.meas tran clk_period2  TRIG V(v2) VAL='0.5*VDD' RISE=2  TARG V(v2) VAL='0.5*VDD' RISE=3
+.meas tran clk_period3  TRIG V(v3) VAL='0.5*VDD' RISE=2  TARG V(v3) VAL='0.5*VDD' RISE=3
 
-.print clk_freq1 = '1 / clk_period1'
-.print clk_freq2 = '1 / clk_period2'
-.print clk_freq3 = '1 / clk_period3'
+.meas tran clk_freq1  PARAM '1 / clk_period1'
+.meas tran clk_freq2  PARAM '1 / clk_period2'
+.meas tran clk_freq3  PARAM '1 / clk_period3'
 
 .end
