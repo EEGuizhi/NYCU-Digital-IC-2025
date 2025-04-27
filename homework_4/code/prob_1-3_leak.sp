@@ -149,23 +149,23 @@ Vgnd  vss 0  0
 Vvdd  vdd 0  VDD
 
 ******************* Input & Analysis *******************
-Va5_b    a5_b vss  VDD
-Va4_b    a4_b vss  VDD
-Va3_b    a3_b vss  VDD
-Va2_b    a2_b vss  VDD
-Va1_b    a1_b vss  VDD
-Va0_b    a0_b vss  VDD
-Vb5_b    b5_b vss  0
-Vb4_b    b4_b vss  0
-Vb3_b    b3_b vss  0
-Vb2_b    b2_b vss  0
-Vb1_b    b1_b vss  0
-Vb0_b    b0_b vss  0
-Vci_b    ci_b vss  VDD
-Vclk     clk  vss  0
+Va5_b    a5_b_d vss  VDD
+Va4_b    a4_b_d vss  VDD
+Va3_b    a3_b_d vss  VDD
+Va2_b    a2_b_d vss  VDD
+Va1_b    a1_b_d vss  VDD
+Va0_b    a0_b_d vss  VDD
+Vb5_b    b5_b_d vss  0
+Vb4_b    b4_b_d vss  0
+Vb3_b    b3_b_d vss  0
+Vb2_b    b2_b_d vss  0
+Vb1_b    b1_b_d vss  0
+Vb0_b    b0_b_d vss  0
+Vci_b    ci_b_d vss  VDD
+Vclk     clk    vss  0
 
 ** Simulation
-.tran 10p 5ns
+.tran 5p 10ns
 
 ** Power measurement
 .meas tran Leak_power   AVG POWER
