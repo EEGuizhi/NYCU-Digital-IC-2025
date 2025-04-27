@@ -13,8 +13,9 @@
 .unprotect
 
 ******************* Parameter setting *******************
-.param L   = 16n
-.param VDD = 0.8
+.param L     = 16n
+.param VDD   = 0.8
+.param CYCLE = 0.075n
 
 ******************* Circuit description *******************
 .subckt INV    vin vout vdd vss  nfin_p=1 nfin_n=1
@@ -160,13 +161,13 @@ Vb3_b    b3_b vss  0
 Vb2_b    b2_b vss  0
 Vb1_b    b1_b vss  0
 Vb0_b    b0_b vss  0
-Vci_b    ci_b vss  pwl(0n VDD  1n VDD  1.01n 0)
-Vclk     clk  vss  pulse(0 VDD 0.0n 0.01n 0.01n 0.0225n 0.075n)
+Vci_b    ci_b vss  VDD
+Vclk     clk  vss  0
 
 ** Simulation
-.tran 5p 2.5n
+.tran 10p 5ns
 
-** Propagation delay
-.meas tran t_pd  TRIG V(ci) VAL='0.5*VDD' RISE=1  TARG V(s4) VAL='0.5*VDD' FALL=2
+** Power measurement
+.meas tran Leak_power   AVG POWER
 
 .end

@@ -13,8 +13,9 @@
 .unprotect
 
 ******************* Parameter setting *******************
-.param L   = 16n
-.param VDD = 0.8
+.param L     = 16n
+.param VDD   = 0.8
+.param CYCLE = 0.075n
 
 ******************* Circuit description *******************
 .subckt INV    vin vout vdd vss  nfin_p=1 nfin_n=1
@@ -148,25 +149,26 @@ Vgnd  vss 0  0
 Vvdd  vdd 0  VDD
 
 ******************* Input & Analysis *******************
-Va5_b    a5_b vss  VDD
-Va4_b    a4_b vss  VDD
-Va3_b    a3_b vss  VDD
-Va2_b    a2_b vss  VDD
-Va1_b    a1_b vss  VDD
-Va0_b    a0_b vss  VDD
-Vb5_b    b5_b vss  0
-Vb4_b    b4_b vss  0
-Vb3_b    b3_b vss  0
-Vb2_b    b2_b vss  0
-Vb1_b    b1_b vss  0
-Vb0_b    b0_b vss  0
-Vci_b    ci_b vss  pwl(0n VDD  1n VDD  1.01n 0)
-Vclk     clk  vss  pulse(0 VDD 0.0n 0.01n 0.01n 0.0225n 0.075n)
+Va5_b    a5_b vss  pulse(0 VDD 0n         0.01n 0.01n 'CYCLE*64 - 0.01n' 'CYCLE*128')
+Va4_b    a4_b vss  pulse(0 VDD 0n         0.01n 0.01n 'CYCLE*32 - 0.01n' 'CYCLE*64' )
+Va3_b    a3_b vss  pulse(0 VDD 0n         0.01n 0.01n 'CYCLE*16 - 0.01n' 'CYCLE*32' )
+Va2_b    a2_b vss  pulse(0 VDD 0n         0.01n 0.01n 'CYCLE*8  - 0.01n' 'CYCLE*16' )
+Va1_b    a1_b vss  pulse(0 VDD 0n         0.01n 0.01n 'CYCLE*4  - 0.01n' 'CYCLE*8'  )
+Va0_b    a0_b vss  pulse(0 VDD 0n         0.01n 0.01n 'CYCLE*2  - 0.01n' 'CYCLE*4'  )
+Vb5_b    b5_b vss  pulse(0 VDD 'CYCLE*64' 0.01n 0.01n 'CYCLE*64 - 0.01n' 'CYCLE*128')
+Vb4_b    b4_b vss  pulse(0 VDD 'CYCLE*32' 0.01n 0.01n 'CYCLE*32 - 0.01n' 'CYCLE*64' )
+Vb3_b    b3_b vss  pulse(0 VDD 'CYCLE*16' 0.01n 0.01n 'CYCLE*16 - 0.01n' 'CYCLE*32' )
+Vb2_b    b2_b vss  pulse(0 VDD 'CYCLE*8'  0.01n 0.01n 'CYCLE*8  - 0.01n' 'CYCLE*16' )
+Vb1_b    b1_b vss  pulse(0 VDD 'CYCLE*4'  0.01n 0.01n 'CYCLE*4  - 0.01n' 'CYCLE*8'  )
+Vb0_b    b0_b vss  pulse(0 VDD 'CYCLE*2'  0.01n 0.01n 'CYCLE*2  - 0.01n' 'CYCLE*4'  )
+Vci_b    ci_b vss  pulse(0 VDD 'CYCLE'    0.01n 0.01n 'CYCLE    - 0.01n' 'CYCLE*2'  )
+Vclk     clk  vss  pulse(0 VDD 0n 0.01n 0.01n 'CYCLE/2 - 0.01n' CYCLE)
 
 ** Simulation
-.tran 5p 2.5n
+.tran 10p 'CYCLE*128'
 
-** Propagation delay
-.meas tran t_pd  TRIG V(ci) VAL='0.5*VDD' RISE=1  TARG V(s4) VAL='0.5*VDD' FALL=2
+** Power measurement
+.meas tran Avg_power   AVG POWER
+.meas tran Peak_power  MAX POWER
 
 .end

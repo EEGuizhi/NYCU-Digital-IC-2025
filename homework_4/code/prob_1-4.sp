@@ -73,13 +73,13 @@
     mn12    vss a    n10 vss  nch_svt_mac l=L nfin=nfin_C
 .ends
 
-.subckt RCA_6b    a5 a4 a3 a2 a1 a0 b5 b4 b3 b2 b1 b0 ci s5 s4 s3 s2 s1 s0 co vdd vss
-    Xfa0    a0   b0   ci  s0_b co0 vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
-    Xfa1    a1_b b1_b co0 s1   co1 vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
-    Xfa2    a2   b2   co1 s2_b co2 vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
-    Xfa3    a3_b b3_b co2 s3   co3 vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
-    Xfa4    a4   b4   co3 s4_b co4 vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
-    Xfa5    a5_b b5_b co4 s5   co  vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
+.subckt RCA_6b_2STG    clk a5 a4 a3 a2 a1 a0 b5 b4 b3 b2 b1 b0 ci s5 s4 s3 s2 s1 s0 co vdd vss
+    Xfa0    a0     b0     ci  s0_b_d co0   vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
+    Xfa1    a1_b   b1_b   co0 s1_d   co1   vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
+    Xfa2    a2     b2     co1 s2_b_d co2_d vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
+    Xfa3    a3_b_q b3_b_q co2 s3     co3   vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
+    Xfa4    a4_q   b4_q   co3 s4_b   co4   vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
+    Xfa5    a5_b_q b5_b_q co4 s5     co    vdd vss  FA nfin_A=2  nfin_B=2  nfin_C=3
 
     Xinv0   s0_b s0   vdd vss  INV nfin_p=1 nfin_n=1
     Xinv1a  a1   a1_b vdd vss  INV nfin_p=1 nfin_n=1
@@ -90,6 +90,18 @@
     Xinv4   s4_b s4   vdd vss  INV nfin_p=1 nfin_n=1
     Xinv5a  a5   a5_b vdd vss  INV nfin_p=1 nfin_n=1
     Xinv5b  b5   b5_b vdd vss  INV nfin_p=1 nfin_n=1
+
+    ** Pipeline registers
+    Xdff_c2    clk co2_d  co2    vdd vss  DFF
+    Xdff_a3    clk a3_b   a3_b_q vdd vss  DFF
+    Xdff_b3    clk b3_b   b3_b_q vdd vss  DFF
+    Xdff_a4    clk a4     a4_q   vdd vss  DFF
+    Xdff_b4    clk b4     b4_q   vdd vss  DFF
+    Xdff_a5    clk a5_b   a5_b_q vdd vss  DFF
+    Xdff_b5    clk b5_b   b5_b_q vdd vss  DFF
+    Xdff_s0    clk s0_b_d s0_b   vdd vss  DFF
+    Xdff_s1    clk s1_d   s1     vdd vss  DFF
+    Xdff_s2    clk s2_b_d s2_b   vdd vss  DFF
 .ends
 
 ** DFF before input inverters
