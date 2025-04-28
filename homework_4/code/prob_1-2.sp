@@ -167,6 +167,6 @@ Vclk     clk    vss  pulse(0 VDD 0.0n 0.01n 0.01n 0.0225n 0.075n)
 .tran 5p 2.5n
 
 ** Propagation delay
-.meas tran t_pd  TRIG V(ci) VAL='0.5*VDD' RISE=1  TARG V(s4) VAL='0.5*VDD' FALL=2
+.meas tran t_pd  TRIG V(ci) VAL='0.5*VDD' RISE=1  TARG V(s5) VAL='0.5*VDD' FALL=2
 
 .end

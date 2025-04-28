@@ -162,12 +162,12 @@ Vb2_b    b2_b_d vss  0
 Vb1_b    b1_b_d vss  0
 Vb0_b    b0_b_d vss  0
 Vci_b    ci_b_d vss  VDD
-Vclk     clk    vss  0
+Vclk     clk    vss  pwl(0n 0 0.01n VDD 0.0325n VDD 0.0425n 0)
 
 ** Simulation
 .tran 5p 10ns
 
 ** Power measurement
-.meas tran Leak_power   AVG POWER
+.meas tran Leak_power   AVG POWER FROM=0.1n
 
 .end

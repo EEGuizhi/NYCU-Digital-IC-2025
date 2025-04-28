@@ -13,8 +13,9 @@
 .unprotect
 
 ******************* Parameter setting *******************
-.param L   = 16n
-.param VDD = 0.8
+.param L     = 16n
+.param VDD   = 0.8
+.param CYCLE = 48p
 
 ******************* Circuit description *******************
 .subckt INV    vin vout vdd vss  nfin_p=1 nfin_n=1
@@ -135,7 +136,7 @@ Xinv_in_b5    b5_b_q b5 vdd vss  INV
 Xinv_in_ci    ci_b_q ci vdd vss  INV
 
 ** Ripple-Carry Adder 6-bit
-Xrca    a5 a4 a3 a2 a1 a0 b5 b4 b3 b2 b1 b0 ci s5 s4 s3 s2 s1 s0 co vdd vss  RCA_6b
+Xrca    clk a5 a4 a3 a2 a1 a0 b5 b4 b3 b2 b1 b0 ci s5 s4 s3 s2 s1 s0 co vdd vss  RCA_6b_2STG
 
 ** Output DFFs
 Xdff_out_s0    clk s0 s0_q vdd vss  DFF
@@ -172,13 +173,14 @@ Vb3_b    b3_b_d vss  0
 Vb2_b    b2_b_d vss  0
 Vb1_b    b1_b_d vss  0
 Vb0_b    b0_b_d vss  0
-Vci_b    ci_b_d vss  pwl(0n VDD  1n VDD  1.01n 0)
-Vclk     clk    vss  pulse(0 VDD 0.0n 0.01n 0.01n 0.0225n 0.075n)
+Vci_b    ci_b_d vss  pwl(0n VDD  0.5n VDD  0.51n 0)
+Vclk     clk    vss  pulse(0 VDD 0.0n 0.01n 0.01n 'CYCLE/2 - 0.01n' CYCLE)
 
 ** Simulation
-.tran 5p 2.5n
+.tran 1p 1n
 
 ** Propagation delay
-.meas tran t_pd  TRIG V(ci) VAL='0.5*VDD' RISE=1  TARG V(s4) VAL='0.5*VDD' FALL=2
+.meas tran t_pd_stg1  TRIG V(ci)       VAL='0.5*VDD' RISE=1  TARG V(Xrca.s2_b_d) VAL='0.5*VDD' RISE=2
+.meas tran t_pd_stg2  TRIG V(Xrca.co2) VAL='0.5*VDD' FALL=1  TARG V(s5)          VAL='0.5*VDD' FALL=2
 
 .end
