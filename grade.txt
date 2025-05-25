@@ -1,7 +1,8 @@
 - Homework 1 :  98
-- Homework 2 :  
-- Homework 3 :  
-- Homework 4 :  
-- Homework 5 :  
-- Homework 6 :  
-- Homework 7 :  
+- Homework 2 : 100
+- Homework 3 : 100
+- Homework 4 : 100
+- Homework 5 : 
+- Homework 6 : 
+- Homework 7 : 
+- Homework 8 : 
